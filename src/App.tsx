@@ -8,8 +8,8 @@ import {
 } from "lucide-react";
 import type { AppState } from "./types";
 import { fetchSheetData } from "./services/sheetService";
-import DataCardGrid from "./components/DataCardGrid";
-import SettingsModal from "./components/SettingsModal";
+import DataCardGrid from "./components/DataCardGrid.tsx";
+import SettingsModal from "./components/SettingsModal.tsx";
 
 const App: React.FC = () => {
   const [state, setState] = useState<AppState>({
@@ -224,7 +224,7 @@ const App: React.FC = () => {
                     Open Sheet <ExternalLink size={18} />
                   </a>
                   <button
-                    onClick={loadData}
+                    onClick={() => loadData()}
                     className="glass-card"
                     style={{
                       padding: "0.8rem 1.5rem",
@@ -254,7 +254,7 @@ const App: React.FC = () => {
                 <p style={{ marginBottom: "2rem", color: "var(--text-muted)" }}>
                   {state.error.message}
                 </p>
-                <button onClick={loadData} className="btn-primary">
+                <button onClick={() => loadData()} className="btn-primary">
                   Retry Connection
                 </button>
               </>
