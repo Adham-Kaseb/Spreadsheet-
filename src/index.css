@@ -1,24 +1,25 @@
 :root {
-  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-family: 'Tajawal', system-ui, -apple-system, sans-serif;
   
-  /* Modern Dark Palette */
-  --bg-color: #0d1117;
-  --bg-card: rgba(22, 27, 34, 0.7);
-  --bg-card-hover: rgba(33, 38, 45, 0.8);
+  /* User-Provided Light Palette */
+  --bg-color: #f3f4f8;
+  --bg-card: rgba(255, 255, 255, 0.8);
+  --bg-card-hover: rgba(255, 255, 255, 1);
   
-  --primary: #58a6ff;
-  --primary-glow: rgba(88, 166, 255, 0.3);
-  --accent: #79c0ff;
+  --primary: #646ea7;
+  --primary-glow: rgba(100, 110, 167, 0.2);
+  --secondary: #b7abd0;
+  --accent: #937db6;
   
-  --text-main: #c9d1d9;
-  --text-muted: #8b949e;
-  --text-bright: #f0f6fc;
+  --text-main: #090a10;
+  --text-muted: #5e6573;
+  --text-bright: #000000;
   
-  --border-color: rgba(48, 54, 61, 0.5);
-  --border-glow: rgba(88, 166, 255, 0.2);
+  --border-color: rgba(100, 110, 167, 0.15);
+  --border-glow: rgba(100, 110, 167, 0.3);
   
   --glass-effect: blur(12px) saturate(180%);
-  --shadow-premium: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  --shadow-premium: 0 8px 32px 0 rgba(100, 110, 167, 0.08);
   
   --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -79,12 +80,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--border-color);
+  background: var(--secondary);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--text-muted);
+  background: var(--primary);
 }
 
 button {
@@ -96,7 +97,7 @@ button {
 
 .btn-primary {
   background: var(--primary);
-  color: #000;
+  color: #fff;
   padding: 0.8rem 1.5rem;
   border-radius: 12px;
   font-weight: 600;

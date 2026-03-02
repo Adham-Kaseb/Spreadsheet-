@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  Database,
   RefreshCw,
   AlertCircle,
   ExternalLink,
@@ -8,8 +7,7 @@ import {
 } from "lucide-react";
 import type { AppState } from "./types";
 import { fetchSheetData } from "./services/sheetService";
-import DataTable from "./components/DataTable";
-import Dashboard from "./components/Dashboard";
+import DataCardGrid from "./components/DataCardGrid";
 
 const App: React.FC = () => {
   const [state, setState] = useState<AppState>({
@@ -61,28 +59,29 @@ const App: React.FC = () => {
               marginBottom: "0.5rem",
             }}
           >
-            <Database
+            <img
+              src="/logo.png"
+              alt="شعار رؤى جداول البيانات"
+              style={{ width: "40px", height: "40px", objectFit: "contain" }}
               className="primary-glow"
-              style={{ color: "var(--primary)" }}
-              size={28}
             />
             <span
               style={{
                 fontWeight: "600",
-                letterSpacing: "0.1em",
+                letterSpacing: "0.05em",
                 textTransform: "uppercase",
                 color: "var(--text-muted)",
                 fontSize: "0.75rem",
               }}
             >
-              Data Intelligence Platform
+              منصة ذكاء البيانات
             </span>
           </div>
           <h1
             className="premium-title"
             style={{ fontSize: "2.5rem", lineHeight: "1.1" }}
           >
-            Spreadsheet Insights
+            رؤى جداول البيانات
           </h1>
         </div>
 
@@ -102,7 +101,7 @@ const App: React.FC = () => {
             }}
           >
             <RefreshCw size={18} className={state.isLoading ? "spin" : ""} />
-            {state.isLoading ? "Syncing..." : "Sync Data"}
+            {state.isLoading ? "جاري المزامنة..." : "تحديث البيانات"}
           </button>
         </div>
       </header>
@@ -124,10 +123,10 @@ const App: React.FC = () => {
               style={{
                 marginTop: "2rem",
                 color: "var(--text-muted)",
-                letterSpacing: "0.1em",
+                letterSpacing: "0.05em",
               }}
             >
-              ANALYZING DATA STRUCTURE...
+              جاري تحليل هيكل البيانات...
             </p>
           </div>
         ) : state.error ? (
@@ -260,8 +259,10 @@ const App: React.FC = () => {
         ) : (
           state.data && (
             <>
-              <Dashboard data={state.data.rows} />
-              <DataTable headers={state.data.headers} rows={state.data.rows} />
+              <DataCardGrid
+                headers={state.data.headers}
+                rows={state.data.rows}
+              />
 
               <footer
                 style={{
@@ -294,10 +295,6 @@ const App: React.FC = () => {
           animation: rotation 1s linear infinite;
         }
         @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        .table-row-hover:hover {
-          background: rgba(255, 255, 255, 0.05);
-        }
 
         .primary-glow {
           filter: drop-shadow(0 0 8px var(--primary-glow));
