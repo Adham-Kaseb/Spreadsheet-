@@ -51,32 +51,6 @@ const App: React.FC = () => {
         }}
       >
         <div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "0.75rem",
-              marginBottom: "0.5rem",
-            }}
-          >
-            <img
-              src="/logo.png"
-              alt="شعار رؤى جداول البيانات"
-              style={{ width: "40px", height: "40px", objectFit: "contain" }}
-              className="primary-glow"
-            />
-            <span
-              style={{
-                fontWeight: "600",
-                letterSpacing: "0.05em",
-                textTransform: "uppercase",
-                color: "var(--text-muted)",
-                fontSize: "0.75rem",
-              }}
-            >
-              منصة ذكاء البيانات
-            </span>
-          </div>
           <h1
             className="premium-title"
             style={{ fontSize: "2.5rem", lineHeight: "1.1" }}

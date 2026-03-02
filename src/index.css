@@ -1,27 +1,33 @@
 :root {
   --font-family: 'Tajawal', system-ui, -apple-system, sans-serif;
   
-  /* User-Provided Light Palette */
-  --bg-color: #f3f4f8;
-  --bg-card: rgba(255, 255, 255, 0.8);
+  /* New Custom Palette */
+  --bg-color: #f5f3fa;
+  --bg-card: rgba(255, 255, 255, 0.85);
   --bg-card-hover: rgba(255, 255, 255, 1);
   
-  --primary: #646ea7;
-  --primary-glow: rgba(100, 110, 167, 0.2);
-  --secondary: #b7abd0;
-  --accent: #937db6;
+  --primary: #724dc8;
+  --secondary: #a284e6;
+  --accent: #8153ec;
   
-  --text-main: #090a10;
-  --text-muted: #5e6573;
-  --text-bright: #000000;
+  --primary-glow: rgba(114, 77, 200, 0.15);
+  --accent-glow: rgba(129, 83, 236, 0.2);
   
-  --border-color: rgba(100, 110, 167, 0.15);
-  --border-glow: rgba(100, 110, 167, 0.3);
+  --text-main: #0f0c15;
+  --text-muted: #5e5a6e;
+  --text-bright: #0f0c15;
   
-  --glass-effect: blur(12px) saturate(180%);
-  --shadow-premium: 0 8px 32px 0 rgba(100, 110, 167, 0.08);
+  /* Gradients */
+  --grad-primary: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  --grad-soft: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+  --grad-surface: linear-gradient(180deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.4) 100%);
   
-  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --border-color: rgba(114, 77, 200, 0.12);
+  --border-glow: rgba(114, 77, 200, 0.25);
+  
+  --glass-effect: blur(16px) saturate(160%);
+  --shadow-premium: 0 12px 40px rgba(114, 77, 200, 0.06);
+  --transition-smooth: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 * {
@@ -65,7 +71,7 @@ body {
 }
 
 .premium-title {
-  background: linear-gradient(135deg, var(--text-bright) 0%, var(--primary) 100%);
+  background: var(--grad-primary);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -113,6 +119,6 @@ button {
 
 .btn-primary:hover {
   filter: brightness(1.1);
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(88, 166, 255, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px var(--accent-glow);
 }

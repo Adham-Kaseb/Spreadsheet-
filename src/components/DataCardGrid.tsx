@@ -236,73 +236,154 @@ const DataCardGrid: React.FC<Props> = ({ headers, rows }) => {
 
               {/* Information Rows */}
               <div style={{ display: "grid", gap: "1.25rem" }}>
-                {headers.slice(3).map((header) => {
-                  const value = row[header];
-                  if (!value || String(value).trim() === "............")
-                    return null;
-                  const icon = getIcon(header);
+                {/* Special Row for Education and Work */}
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "1fr 1fr",
+                    gap: "1.25rem",
+                  }}
+                >
+                  {headers
+                    .slice(3)
+                    .filter(
+                      (h) =>
+                        h === "المرحلة الدراسية الحالية" ||
+                        h === "هل تعمل حاليًا؟",
+                    )
+                    .map((header) => {
+                      const value = row[header];
+                      if (!value || String(value).trim() === "............")
+                        return <div key={header} />;
+                      const icon = getIcon(header);
+                      return (
+                        <div
+                          key={header}
+                          style={{
+                            display: "flex",
+                            gap: "0.75rem",
+                            alignItems: "flex-start",
+                            background: "rgba(114, 77, 200, 0.03)",
+                            padding: "0.75rem",
+                            borderRadius: "10px",
+                            border: "1px solid rgba(0,0,0,0.02)",
+                            flex: 1,
+                          }}
+                        >
+                          <div
+                            style={{
+                              color: "var(--primary)",
+                              marginTop: "2px",
+                            }}
+                          >
+                            {icon}
+                          </div>
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              gap: "2px",
+                            }}
+                          >
+                            <span
+                              style={{
+                                fontSize: "0.7rem",
+                                color: "var(--secondary)",
+                                fontWeight: "800",
+                              }}
+                            >
+                              {header}
+                            </span>
+                            <span
+                              style={{
+                                fontSize: "0.95rem",
+                                color: "var(--text-main)",
+                                fontWeight: "700",
+                              }}
+                            >
+                              {String(value)}
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    })}
+                </div>
 
-                  return (
-                    <div
-                      key={header}
-                      style={{
-                        display: "flex",
-                        gap: "1rem",
-                        alignItems: "flex-start",
-                        background: "rgba(243, 244, 248, 0.5)",
-                        padding: "1rem",
-                        borderRadius: "12px",
-                        border: "1px solid rgba(0,0,0,0.02)",
-                        transition: "var(--transition-smooth)",
-                      }}
-                    >
+                {/* Remaining Fields */}
+                {headers
+                  .slice(3)
+                  .filter(
+                    (h) =>
+                      h !== "المرحلة الدراسية الحالية" &&
+                      h !== "هل تعمل حاليًا؟",
+                  )
+                  .map((header) => {
+                    const value = row[header];
+                    if (!value || String(value).trim() === "............")
+                      return null;
+                    const icon = getIcon(header);
+
+                    return (
                       <div
-                        style={{
-                          color: "var(--primary)",
-                          background: "white",
-                          padding: "8px",
-                          borderRadius: "10px",
-                          boxShadow: "0 2px 8px rgba(100, 110, 167, 0.1)",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        {icon}
-                      </div>
-                      <div
+                        key={header}
                         style={{
                           display: "flex",
-                          flexDirection: "column",
-                          flex: 1,
-                          gap: "0.25rem",
+                          gap: "1rem",
+                          alignItems: "flex-start",
+                          background: "rgba(243, 244, 248, 0.5)",
+                          padding: "1rem",
+                          borderRadius: "12px",
+                          border: "1px solid rgba(0,0,0,0.02)",
+                          transition: "var(--transition-smooth)",
                         }}
                       >
-                        <span
+                        <div
                           style={{
-                            fontSize: "0.75rem",
-                            color: "var(--secondary)",
-                            fontWeight: "800",
-                            textTransform: "uppercase",
-                            letterSpacing: "0.02em",
+                            color: "var(--primary)",
+                            background: "white",
+                            padding: "8px",
+                            borderRadius: "10px",
+                            boxShadow: "0 2px 8px rgba(100, 110, 167, 0.1)",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
                           }}
                         >
-                          {header}
-                        </span>
-                        <span
+                          {icon}
+                        </div>
+                        <div
                           style={{
-                            fontSize: "1.05rem",
-                            color: "var(--text-main)",
-                            fontWeight: "600",
-                            lineHeight: "1.4",
+                            display: "flex",
+                            flexDirection: "column",
+                            flex: 1,
+                            gap: "0.25rem",
                           }}
                         >
-                          {String(value)}
-                        </span>
+                          <span
+                            style={{
+                              fontSize: "0.75rem",
+                              color: "var(--secondary)",
+                              fontWeight: "800",
+                              textTransform: "uppercase",
+                              letterSpacing: "0.02em",
+                            }}
+                          >
+                            {header}
+                          </span>
+                          <span
+                            style={{
+                              fontSize: "1.05rem",
+                              color: "var(--text-main)",
+                              fontWeight: "600",
+                              lineHeight: "1.4",
+                            }}
+                          >
+                            {String(value)}
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
               </div>
             </div>
           );
