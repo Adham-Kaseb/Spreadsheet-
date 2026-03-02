@@ -75,9 +75,25 @@ const DataCardGrid: React.FC<Props> = ({ headers, rows }) => {
               fontWeight: "800",
               color: "var(--text-bright)",
               margin: 0,
+              display: "flex",
+              alignItems: "center",
+              gap: "0.75rem",
             }}
           >
             مستودع البيانات
+            <span
+              style={{
+                fontSize: "0.9rem",
+                background: "var(--primary)",
+                color: "white",
+                padding: "2px 12px",
+                borderRadius: "20px",
+                fontWeight: "600",
+                boxShadow: "0 2px 8px var(--primary-glow)",
+              }}
+            >
+              {filteredRows.length}
+            </span>
           </h2>
         </div>
 
@@ -109,6 +125,7 @@ const DataCardGrid: React.FC<Props> = ({ headers, rows }) => {
               fontWeight: "500",
               transition: "var(--transition-smooth)",
               boxShadow: "inset 0 2px 4px rgba(0,0,0,0.02)",
+              fontFamily: "inherit",
             }}
             onFocus={(e) => (e.target.style.borderColor = "var(--primary)")}
             onBlur={(e) => (e.target.style.borderColor = "transparent")}

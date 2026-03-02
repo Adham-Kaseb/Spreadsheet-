@@ -30,8 +30,11 @@
   box-sizing: border-box;
 }
 
-body {
+body, button, input, textarea, select {
   font-family: var(--font-family);
+}
+
+body {
   background: var(--bg-color);
   color: var(--text-main);
   min-height: 100vh;
@@ -64,6 +67,7 @@ body {
 .premium-title {
   background: linear-gradient(135deg, var(--text-bright) 0%, var(--primary) 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: 800;
   letter-spacing: -0.02em;
