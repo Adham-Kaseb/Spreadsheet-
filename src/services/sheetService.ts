@@ -1,18 +1,39 @@
 import Papa, { type ParseResult } from "papaparse";
 import type { SheetData, FetchError } from "../types";
 
-const SPREADSHEET_ID = "1aGoZhXyPQjSHbR3VTsJDTzJ6QoIhGcvjvOzODDHGaCI";
-const GID = "1651906944";
-const CSV_URL = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/export?format=csv&gid=${GID}`;
+export const DEFAULT_SPREADSHEET_ID =
+  "1aGoZhXyPQjSHbR3VTsJDTzJ6QoIhGcvjvOzODDHGaCI";
+export const DEFAULT_GID = "1651906944";
 
-export const fetchSheetData = async (): Promise<SheetData> => {
+const extractUrlParts = (url: string) => {
   try {
-    const response = await fetch(CSV_URL);
+    const idMatch = url.match(/\/d\/([a-zA-Z0-9-_]+)/);
+    const gidMatch = url.match(/[#&]gid=([0-9]+)/);
+
+    return {
+      id: idMatch ? idMatch[1] : DEFAULT_SPREADSHEET_ID,
+      gid: gidMatch ? gidMatch[1] : DEFAULT_GID,
+    };
+  } catch {
+    return { id: DEFAULT_SPREADSHEET_ID, gid: DEFAULT_GID };
+  }
+};
+
+export const fetchSheetData = async (sheetUrl?: string): Promise<SheetData> => {
+  let url = `https://docs.google.com/spreadsheets/d/${DEFAULT_SPREADSHEET_ID}/export?format=csv&gid=${DEFAULT_GID}`;
+
+  if (sheetUrl) {
+    const { id, gid } = extractUrlParts(sheetUrl);
+    url = `https://docs.google.com/spreadsheets/d/${id}/export?format=csv&gid=${gid}`;
+  }
+
+  try {
+    const response = await fetch(url);
 
     if (response.status === 401 || response.status === 403) {
       throw {
         message:
-          'Access Restricted. Please make sure the Google Sheet is shared with "Anyone with the link can view".',
+          'الوصول مقيد. يرجى التأكد من مشاركة الجدول كـ "أي شخص لديه الرابط يمكنه العرض".',
         status: response.status,
         isRestricted: true,
       } as FetchError;
@@ -20,7 +41,7 @@ export const fetchSheetData = async (): Promise<SheetData> => {
 
     if (!response.ok) {
       throw {
-        message: `Failed to fetch data: ${response.statusText}`,
+        message: `فشل جلب البيانات: ${response.statusText}`,
         status: response.status,
         isRestricted: false,
       } as FetchError;
@@ -36,23 +57,21 @@ export const fetchSheetData = async (): Promise<SheetData> => {
           resolve({
             headers: results.meta.fields || [],
             rows: results.data as Record<string, any>[],
-            lastUpdated: new Date().toLocaleString(),
+            lastUpdated: new Date().toLocaleString("ar-EG"),
           });
         },
         error: (error: Error) => {
           reject({
-            message: `Parsing Error: ${error.message}`,
+            message: `خطأ في تحليل البيانات: ${error.message}`,
             isRestricted: false,
           } as FetchError);
         },
       });
     });
-  } catch (error) {
-    if ((error as FetchError).message) {
-      throw error;
-    }
+  } catch (error: any) {
+    if (error.message) throw error;
     throw {
-      message: "Network Error. Please check your connection.",
+      message: "خطأ في الشبكة. يرجى التحقق من اتصالك.",
       isRestricted: false,
     } as FetchError;
   }

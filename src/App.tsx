@@ -4,10 +4,12 @@ import {
   AlertCircle,
   ExternalLink,
   ShieldAlert,
+  Settings,
 } from "lucide-react";
 import type { AppState } from "./types";
 import { fetchSheetData } from "./services/sheetService";
 import DataCardGrid from "./components/DataCardGrid";
+import SettingsModal from "./components/SettingsModal";
 
 const App: React.FC = () => {
   const [state, setState] = useState<AppState>({
@@ -15,15 +17,27 @@ const App: React.FC = () => {
     isLoading: true,
     error: null,
   });
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [sheetUrl, setSheetUrl] = useState(
+    localStorage.getItem("spreadsheet_url") || "",
+  );
 
-  const loadData = async () => {
+  const loadData = async (urlOverride?: string) => {
+    const urlToFetch = urlOverride !== undefined ? urlOverride : sheetUrl;
     setState((prev) => ({ ...prev, isLoading: true, error: null }));
     try {
-      const data = await fetchSheetData();
+      const data = await fetchSheetData(urlToFetch);
       setState({ data, isLoading: false, error: null });
     } catch (err: any) {
       setState({ data: null, isLoading: false, error: err });
     }
+  };
+
+  const handleSaveSettings = (newUrl: string) => {
+    setSheetUrl(newUrl);
+    localStorage.setItem("spreadsheet_url", newUrl);
+    setIsSettingsOpen(false);
+    loadData(newUrl);
   };
 
   useEffect(() => {
@@ -61,7 +75,23 @@ const App: React.FC = () => {
 
         <div style={{ display: "flex", gap: "1rem" }}>
           <button
-            onClick={loadData}
+            onClick={() => setIsSettingsOpen(true)}
+            className="glass-card"
+            style={{
+              padding: "0.75rem",
+              borderRadius: "12px",
+              color: "var(--text-main)",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem",
+              fontSize: "0.875rem",
+            }}
+          >
+            <Settings size={18} />
+            الإعدادات
+          </button>
+          <button
+            onClick={() => loadData()}
             disabled={state.isLoading}
             className="glass-card"
             style={{
@@ -254,6 +284,13 @@ const App: React.FC = () => {
           )
         )}
       </main>
+
+      <SettingsModal
+        isOpen={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
+        currentUrl={sheetUrl}
+        onSave={handleSaveSettings}
+      />
 
       <style>{`
         .spin { animation: spin 1s linear infinite; }
